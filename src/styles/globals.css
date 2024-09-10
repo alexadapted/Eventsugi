@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* nprogress */
+
+#nprogress {
+  @apply pointer-events-none;
+}
+
+#nprogress .bar {
+  @apply fixed left-0 top-0 z-[1000] h-1 w-full bg-purple-600;
+}
+
+#nprogress .spinner {
+  @apply fixed right-1 top-1 z-[1001] block sm:right-2 sm:top-2;
+}
+
+#nprogress .spinner-icon {
+  @apply box-border h-5 w-5 rounded-full border-2 border-transparent border-l-purple-600 border-t-purple-600;
+  animation: nprogress-spinner 500ms linear infinite;
+}
+
+@keyframes nprogress-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* nprogress end */
+
+.black-arrow-slides .slick-prev:before {
+  color: black;
+}
+
+.black-arrow-slides .slick-next:before {
+  color: black;
+}
+
+.tooltip {
+  @apply relative;
+}
+
+.tooltip .tooltip-text {
+  @apply invisible absolute z-10 hidden min-w-max items-center justify-center rounded bg-gray-900 px-2 py-1 text-xs text-gray-50 transition-all lg:flex;
+}
+
+.tooltip-text-top {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip-text-bottom {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip-text-left {
+  top: 50%;
+  right: 100%;
+  transform: translateY(-50%);
+}
+
+.tooltip-text-right {
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+}
+
+.tooltip:hover .tooltip-text {
+  @apply visible;
+}

@@ -1,0 +1,233 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Example {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now()) @db.Timestamptz()
+    updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+    @@map("Examples")
+}
+
+model Account {
+    id                String  @id @default(cuid())
+    userId            String
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String? @db.Text
+    session_state     String?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+    @@map("Accounts")
+}
+
+model Session {
+    id           String   @id @default(cuid())
+    sessionToken String   @unique
+    userId       String
+    expires      DateTime @db.Timestamptz()
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@map("Sessions")
+}
+
+model User {
+    id            String    @id @default(cuid())
+    name          String?
+    email         String?   @unique
+    emailVerified DateTime? @db.Timestamptz()
+    image         String?
+    password      String?
+
+    accounts Account[]
+    sessions Session[]
+
+    createdAt DateTime @default(now()) @db.Timestamptz()
+    updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+    @@map("Users")
+}
+
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+    @@map("VerificationTokens")
+}
+
+enum ContactUsLeadType {
+    Contact
+    Catalog
+}
+
+model ContactUsLead {
+    id        String            @id @default(cuid())
+    name      String
+    email     String
+    phone     String
+    message   String?
+    page      String
+    subscribe Boolean           @default(false)
+    type      ContactUsLeadType @default(Contact)
+
+    createdAt DateTime @default(now()) @db.Timestamptz()
+    updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+    @@map("ContactUsLeads")
+}
+
+model Service {
+    id              String  @id @default(cuid())
+    name            String
+    slug            String  @unique
+    tagLine         String
+    pageTitle       String
+    metaDescription String
+    heading         String
+    description     String
+    order           Int
+    showOnPage      Boolean @default(false)
+    showOnHomePage  Boolean @default(false)
+    imageId         String  @unique
+    parentId        String?
+
+    image           Resource         @relation(fields: [imageId], references: [id], onDelete: Cascade)
+    serviceFeatures ServiceFeature[]
+    faqs            Faq[]
+    parent          Service?         @relation("ParentChild", fields: [parentId], references: [id])
+    children        Service[]        @relation("ParentChild")
+
+    createdAt      DateTime         @default(now()) @db.Timestamptz()
+    updatedAt      DateTime         @default(now()) @updatedAt @db.Timestamptz()
+    HeaderServices HeaderServices[]
+
+    @@map("Services")
+}
+
+model ServiceFeature {
+    id          String @id @default(cuid())
+    serviceId   String
+    title       String
+    description String
+    order       Int
+
+    service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+    @@map("ServiceFeatures")
+}
+
+model HeaderServices {
+    id        String @id @default(cuid())
+    serviceId String
+    order     Int
+
+    service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+    @@map("HeaderServices")
+}
+
+model Faq {
+    id        String @id @default(cuid())
+    serviceId String
+    question  String
+    answer    String
+    order     Int
+
+    service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+    @@map("Faqs")
+}
+
+model Resource {
+    id               String  @id @default(cuid())
+    originalFilename String
+    newFilename      String  @unique
+    url              String  @unique
+    blogId           String?
+
+    createdAt      DateTime         @default(now()) @db.Timestamptz()
+    updatedAt      DateTime         @default(now()) @updatedAt @db.Timestamptz()
+    service        Service?
+    blog           Blog?            @relation(fields: [blogId], references: [id])
+    client         Client?
+    portfolioImage Portfolio?       @relation("PortfolioImage")
+    portfolioVideo Portfolio?       @relation("PortfolioVideo")
+    HomePageConfig HomePageConfig[]
+
+    @@map("Resources")
+}
+
+model Blog {
+    id              String  @id @default(cuid())
+    title           String
+    content         String  @db.Text
+    slug            String  @unique
+    published       Boolean @default(false)
+    pageTitle       String
+    metaDescription String
+    metaKeywords    String
+
+    createdAt DateTime   @default(now()) @db.Timestamptz()
+    updatedAt DateTime   @default(now()) @updatedAt @db.Timestamptz()
+    resource  Resource[]
+
+    @@index([published])
+    @@index([published, title])
+    @@map("Blogs")
+}
+
+model Client {
+    id      String @id @default(cuid())
+    name    String
+    order   Int
+    imageId String @unique
+
+    image Resource @relation(fields: [imageId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now()) @db.Timestamptz()
+    updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+    @@map("Clients")
+}
+
+model Portfolio {
+    id      String  @id @default(cuid())
+    title   String
+    order   Int
+    imageId String? @unique
+    videoId String? @unique
+
+    image Resource? @relation("PortfolioImage", fields: [imageId], references: [id], onDelete: Cascade)
+    video Resource? @relation("PortfolioVideo", fields: [videoId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now()) @db.Timestamptz()
+    updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz()
+
+    @@map("Portfolios")
+}
+
+model HomePageConfig {
+    id      String  @id @default(cuid())
+    imageId String?
+
+    image Resource? @relation(fields: [imageId], references: [id], onDelete: Cascade)
+
+    @@map("HomePageConfig")
+}
