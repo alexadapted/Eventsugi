@@ -7,7 +7,6 @@ import MarkdownRenderer  from '~/components/MarkdownRenderer'
 import { Footer } from '~/components/Footer'
 import { Header } from '~/components/Header'
 import { Landing } from '~/components/Landing'
-import { LineShape } from '~/components/LineShape'
 import { getMetaData } from '~/utils/meta'
 import { api } from '~/utils/trpc'
 
