@@ -186,7 +186,7 @@ const ServicesPage: NextPage = () => {
                       />
                       )}
                     <span
-                      className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-heading text-2xl font-semibold uppercase text-gray-100`}
+                      className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-heading text-l md:text-2xl font-semibold uppercase text-gray-100`}
                     >
                       {service.title}
                     </span>
