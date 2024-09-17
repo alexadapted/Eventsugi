@@ -4,6 +4,7 @@ import { createTRPCRouter } from '~/server/api/trpc'
 import { serviceRouter } from './routers/service'
 import { clientRouter } from './routers/client'
 import { portfolioRouter } from './routers/portfolio'
+import { blogsRouter } from './routers/blogs'
 
 /**
  * This is the primary router for your server.
@@ -15,6 +16,7 @@ export const appRouter = createTRPCRouter({
   contactUsLeads: contactUsLeadRouter,
   service: serviceRouter,
   client: clientRouter,
+  blogs : blogsRouter,
   portfolio: portfolioRouter
 })
 

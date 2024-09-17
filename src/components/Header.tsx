@@ -181,7 +181,7 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                   {serviceHeaders?.map(s => (
                     <Link
                       key={s.service.slug}
-                      href={s.service.slug}
+                      href={`/${s.service.slug.replace('/blog/', '')}`}
                       className={`tooltip p-2 font-medium underline-offset-4 transition-all hover:underline ${
                         !isDark
                           ? 'bg-gray-900 hover:bg-gray-800'
@@ -197,7 +197,7 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                   ))}
                 </div>
               </li>
-              {/* <li className="relative">
+            <li className="relative">
                 <Link
                   href="/blog"
                   className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
@@ -207,7 +207,7 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                     Blog
                   </span>
                 </Link>
-              </li> */}
+              </li> 
               <li className="relative">
                 <Link
                   href="/portfolio"

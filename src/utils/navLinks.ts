@@ -25,10 +25,10 @@ export const NavLinks: {
       name: 'Clients',
       link: '/#clients-section'
     },
-    // {
-    //   name: 'Blog',
-    //   link: '/blog'
-    // },
+    {
+      name: 'Blog',
+      link: '/blog'
+    },
     {
       name: 'Get Quote',
       link: '/contact-us'
