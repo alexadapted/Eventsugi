@@ -178,23 +178,23 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                       </span>
                     </Link>
                   ))} */}
-                  {serviceHeaders?.map(s => (
-                    <Link
-                      key={s.service.slug}
-                      href={`/${s.service.slug.replace('/blog/', '')}`}
-                      className={`tooltip p-2 font-medium underline-offset-4 transition-all hover:underline ${
-                        !isDark
-                          ? 'bg-gray-900 hover:bg-gray-800'
-                          : 'bg-gray-100 hover:bg-gray-200'
-                      }`}
-                    >
-                      <span className="mr-2 inline-block h-2 w-2 rounded-full bg-[#ba96fd]" />
-                      {s.service.name}
-                      <span className="tooltip-text tooltip-text-top">
-                        {s.service.name}
-                      </span>
-                    </Link>
-                  ))}
+                {[...new Map(serviceHeaders?.map(s => [s.service.slug, s])).values()].map(s => (
+                <Link
+                  key={s.service.slug}
+                  href={`/${s.service.slug.replace('/blog/', '')}`}
+                  className={`tooltip p-2 font-medium underline-offset-4 transition-all hover:underline ${
+                    !isDark
+                      ? 'bg-gray-900 hover:bg-gray-800'
+                      : 'bg-gray-100 hover:bg-gray-200'
+                  }`}
+                >
+                  <span className="mr-2 inline-block h-2 w-2 rounded-full bg-[#ba96fd]" />
+                  {s.service.name}
+                  <span className="tooltip-text tooltip-text-top">
+                    {s.service.name}
+                  </span>
+                </Link>
+              ))}
                 </div>
               </li>
             <li className="relative">
