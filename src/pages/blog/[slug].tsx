@@ -58,7 +58,7 @@ const BlogPage: NextPage = () => {
       <Landing
     title={blog.title}
     subtitle={''} // Adjust based on available blog fields
-    image={blog.image?.url || imageSrc} // Use blog.image.url if available, otherwise use imageSrc
+    image={ imageSrc} // Use blog.image.url if available, otherwise use imageSrc
   />
       <div className="bg-white text-gray-900">
         <div className="flex flex-col px-4  pt-8 sm:px-8 xl:px-24 2xl:px-32">

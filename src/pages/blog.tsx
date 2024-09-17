@@ -74,7 +74,7 @@ const ServicesPage: NextPage = () => {
         <title>Services | Eventsugi</title>
         {getMetaData('Services | Eventsugi', undefined, '/services', [
           'Services',
-          ...services.map(s => s.name)
+          ...services.map(s => s.title)
         ]).map((m, i) => (
           <meta
             key={i}
