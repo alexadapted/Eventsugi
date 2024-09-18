@@ -132,7 +132,6 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                   className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
                 >
                   Home
-                  <span className="tooltip-text tooltip-text-left">Home</span>
                 </Link>
               </li>
               <li className="relative">
@@ -141,9 +140,6 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                   className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
                 >
                   About Us
-                  <span className="tooltip-text tooltip-text-left">
-                    About Us
-                  </span>
                 </Link>
               </li>
               <li className="group relative hidden md:block">
@@ -152,9 +148,7 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                   className="tooltip transition-all duration-300 group-hover:text-[#ba96fd]"
                 >
                   Services
-                  <span className="tooltip-text tooltip-text-left">
-                    Services
-                  </span>
+                
                 </Link>
                 <div
                   className={`invisible absolute -right-36 grid w-[576px] grid-cols-2 gap-3 rounded-sm p-4 text-base opacity-0 shadow-sm transition-all duration-300 group-hover:visible group-hover:opacity-95 ${
@@ -190,42 +184,34 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                 >
                   <span className="mr-2 inline-block h-2 w-2 rounded-full bg-[#ba96fd]" />
                   {s.service.name}
-                  <span className="tooltip-text tooltip-text-top">
-                    {s.service.name}
-                  </span>
                 </Link>
               ))}
                 </div>
               </li>
-            <li className="relative">
-                <Link
-                  href="/blog"
-                  className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
-                >
-                  Blog
-                  <span className="tooltip-text tooltip-text-bottom">
-                    Blog
-                  </span>
-                </Link>
-              </li> 
+          
               <li className="relative">
                 <Link
                   href="/portfolio"
                   className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
                 >
                   Work
-                  <span className="tooltip-text tooltip-text-bottom">Work</span>
                 </Link>
               </li>
+              <li className="relative">
+                <Link
+                  href="/blog"
+                  className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
+                >
+                  Blog
+                </Link>
+              </li> 
               <li className="relative">
                 <Link
                   href="/#clients-section"
                   className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
                 >
                   Clients
-                  <span className="tooltip-text tooltip-text-bottom">
-                    Clients
-                  </span>
+            
                 </Link>
               </li>
               <li className="relative">
@@ -234,9 +220,7 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                   className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
                 >
                   Get Quote
-                  <span className="tooltip-text tooltip-text-bottom">
-                    Get Quote
-                  </span>
+               
                 </Link>
               </li>
               <li className="relative">
@@ -245,9 +229,6 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                   className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
                 >
                   Contact Us
-                  <span className="tooltip-text tooltip-text-bottom">
-                    Contact Us
-                  </span>
                 </Link>
               </li>
               {/* <li className="relative">
