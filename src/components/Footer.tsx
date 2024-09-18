@@ -95,6 +95,10 @@ export const Footer: FC = () => {
               {
                 name: 'Ramadan Decor',
                 link: '/ramadan-decor'
+              },
+              {
+                name: 'Blog',
+                link: '/blog'
               }
             ].map(({ name, link }) => (
               <Link
