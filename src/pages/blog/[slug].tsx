@@ -6,9 +6,10 @@ import { ContactUsFormSection } from '~/components/ContactUsForm'
 import MarkdownRenderer  from '~/components/MarkdownRenderer'
 import { Footer } from '~/components/Footer'
 import { Header } from '~/components/Header'
-import { Landing } from '~/components/Landing'
+import { Landing } from '~/components/Landing-blog'
 import { getMetaData } from '~/utils/meta'
 import { api } from '~/utils/trpc'
+
 
 const BlogPage: NextPage = () => {
 
@@ -19,6 +20,7 @@ const BlogPage: NextPage = () => {
   const slug = get('slug'); // Assuming slug is passed as a query parameter
 
   const { data: blog, isLoading } = api.blogs.getOne.useQuery(slug as string);
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -56,7 +58,6 @@ const BlogPage: NextPage = () => {
       <Header />
       <Landing
     title={blog.title}
-    subtitle={''} // Adjust based on available blog fields
     image={ imageSrc} // Use blog.image.url if available, otherwise use imageSrc
   />
       <div className="bg-white text-gray-900">
