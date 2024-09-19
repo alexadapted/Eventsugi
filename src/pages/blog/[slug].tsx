@@ -9,6 +9,7 @@ import { Header } from '~/components/Header'
 import { Landing } from '~/components/Landing-blog'
 import { getMetaData } from '~/utils/meta'
 import { api } from '~/utils/trpc'
+import { useRouter } from 'next/router';
 
 
 const BlogPage: NextPage = () => {
@@ -20,6 +21,14 @@ const BlogPage: NextPage = () => {
   const slug = get('slug'); // Assuming slug is passed as a query parameter
 
   const { data: blog, isLoading } = api.blogs.getOne.useQuery(slug as string);
+
+  const router = useRouter();
+
+  // Redirect to the home page if the blog isn't found or loading fails
+  if (!isLoading && !blog) {
+    router.push('/');
+    return null; // Prevent rendering the rest of the component
+  }
 
   if (isLoading) {
     return <p>Loading...</p>;
