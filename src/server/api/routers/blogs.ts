@@ -13,12 +13,14 @@ export const blogsRouter = createTRPCRouter({
       });
     }),
 
-  getAll: publicProcedure.query(async ({ ctx: { prisma } }) => {
-    return await prisma.blog.findMany({
-      where: {
-        published: true,
-      },
-      orderBy: { createdAt: 'desc' }
-    });
-  }),
+    getAll: publicProcedure.query(async ({ ctx: { prisma } }) => {
+      try {
+        return await prisma.blog.findMany({
+          where: { published: true },
+          orderBy: { createdAt: 'desc' }
+        });
+      } catch (error) {
+        throw new Error('Failed to fetch blogs');
+      }
+    }),
 });
