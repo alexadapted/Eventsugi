@@ -1,17 +1,15 @@
-import { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import { Breadcrumbs } from '~/components/Breadcrumbs'
-import { ContactUsFormSection } from '~/components/ContactUsForm'
-import { FAQs } from '~/components/FAQs'
-import { Footer } from '~/components/Footer'
-import { Header } from '~/components/Header'
-import { Landing } from '~/components/Landing'
-import { getMetaData } from '~/utils/meta'
-// import { services } from '~/utils/services'
-import { api } from '~/utils/trpc'
-
+import { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Breadcrumbs } from '~/components/Breadcrumbs';
+import { ContactUsFormSection } from '~/components/ContactUsForm';
+import { FAQs } from '~/components/FAQs';
+import { Footer } from '~/components/Footer';
+import { Header } from '~/components/Header';
+import { Landing } from '~/components/Landing';
+import { getMetaData } from '~/utils/meta';
+import { useEffect, useState } from 'react';
 
 const faqs = [
   {
@@ -35,7 +33,7 @@ const faqs = [
   {
     question: 'How do you handle event logistics and coordination?',
     answer:
-      'We will work closely with you to understand your unique requirements and preferences. We will then curate a list of vendors and venues that best suit your needs and budget. We will coordinate with all vendors and venues to ensure that everything is in place for your event. We will also manage all logistical aspects of your event, including transportation, accommodation, and more.'
+      'We will work closely with you to understand your unique requirements and preferences. We will then curate a list of vendors and venues that best suit your needs and budget. We will coordinate with all vendors and venues to ensure that everything is in place for your event.'
   },
   {
     question: 'How far in advance should I book your services?',
@@ -45,28 +43,56 @@ const faqs = [
         <Link href="/event-planning" className="text-[#ba96fd]">
           Event planners in the UAE
         </Link>{' '}
-        as early as possible. With intricate preparations and vendor
-        coordination, early booking allows us to tailor our services to your
-        vision and secure the best suppliers. This ensures a stress-free and
-        exceptional event experience.
+        as early as possible. Early booking allows us to secure the best suppliers for your event.
       </p>
     )
   },
   {
-    question:
-      'Can you assist with obtaining necessary permits or licenses for the event?',
+    question: 'Can you assist with obtaining necessary permits or licenses for the event?',
     answer:
-      'Certainly, as a leading event management company in UAE, we are well-versed in local regulations. Our experienced event organizers in UAE can guide you through obtaining permits and licenses to ensure your event is compliant with legal standards. Trust us to handle the necessary paperwork, allowing you to fully enjoy your event.'
+      'Certainly! As a leading event management company in UAE, we can guide you through obtaining permits and licenses to ensure your event complies with local regulations.'
   }
-]
+];
 
 const Blogpage: NextPage = () => {
+  const [services, setServices] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://eventsugi.com/api/trpc/blogs.getAll');
 
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
 
-  const { data: services } = api.blogs.getAll.useQuery()
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
 
-  if (!services) return null
+        const result = await response.json();
+        console.log('Fetched result:', result);
+
+        // Extract the array from the result object
+        const data = result.result?.data?.json || [];
+        if (Array.isArray(data)) {
+          setServices(data);
+        } else {
+          console.error('Expected an array but got:', data);
+        }
+      } catch (error) {
+        console.error('Error fetching blog posts:', error);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Failed to load blog posts.</p>;
 
   return (
     <div>
@@ -74,7 +100,7 @@ const Blogpage: NextPage = () => {
         <title>Services | Eventsugi</title>
         {getMetaData('Services | Eventsugi', undefined, '/services', [
           'Services',
-          ...services.map(s => s.title)
+          ...services.map(s => s.title || 'Unknown Title') // Provide fallback if title is missing
         ]).map((m, i) => (
           <meta
             key={i}
@@ -83,7 +109,7 @@ const Blogpage: NextPage = () => {
             property={m.property}
           />
         ))}
-        <link rel="canonical" href={`https://www.eventsugi.com/services`} />
+        <link rel="canonical" href={`https://www.eventsugi.com/blog`} />
       </Head>
       <Header />
       <Landing
@@ -106,7 +132,7 @@ const Blogpage: NextPage = () => {
               ]}
             />
             <h2 className="mt-8 text-center font-heading text-3xl font-extrabold uppercase lg:text-4xl xl:text-5xl">
-              Eventsugi - One of the Leading Event Management Agencies In Dubai
+              Eventsugi - Leading Event Management Agency In Dubai
             </h2>
             <p className={`mt-8 px-4 text-center font-light text-gray-700`}>
               At our event company in Dubai, we firmly believe in the
@@ -146,56 +172,28 @@ const Blogpage: NextPage = () => {
             </p>
 
             <div className="mt-16 flex flex-col items-center justify-center gap-8 md:grid md:grid-cols-2 xl:grid-cols-3">
-              {services.map(service => (
+              {services.map((service, index) => (
                 <Link
-                  key={service.title}
-                  href={'/blog/' + service.slug}
+                  key={index}
+                  href={`/blog/${service.slug}`}
                   className="flex flex-col items-center justify-center gap-4"
                 >
                   <div className="relative">
-                    
-                    {service.slug === 'Corporate-Events-EventSugi' || service.slug === 'Eventsugi' ? (
                     <Image
-                    src={`/Images/event-management-company/Images _ 12 Blogs/${service.slug}.png`}
-                    alt={service.slug}
-                    className="object-cover brightness-75 transition-all duration-300 hover:brightness-50"
-                    layout="responsive"
-                    width={1}
-                    height={1}
-                    onLoadingComplete={(result) => {
-                    if (!result.naturalWidth) {
-                    // Fallback to a default image if the image failed to load
-                    result.src = '/Images/event-management-company/Images _ 12 Blogs/Eventsugi.png';
-                    }
-                    }}
-                    />
-                    ) : (
-                      <Image
-                      src={`/Images/event-management-company/Images _ 12 Blogs/Eventsugi.png`}
+                      src={`/Images/event-management-company/Images _ 12 Blogs/${service.slug}.png`}
                       alt={service.slug}
                       className="object-cover brightness-75 transition-all duration-300 hover:brightness-50"
                       layout="responsive"
                       width={1}
                       height={1}
-                      onLoadingComplete={(result) => {
-                      if (!result.naturalWidth) {
-                      // Fallback to a default image if the image failed to load
-                      result.src = '/Images/event-management-company/Images _ 12 Blogs/Eventsugi.png';
-                      }
-                      }}
-                      />
-                      )}
-                    <span
-                      className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-heading px-3.5 sm:text-lg md:text-xl lg:text-xl font-semibold uppercase text-gray-100`}
-                    >
+                    />
+                    <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-heading px-3.5 sm:text-lg md:text-xl lg:text-xl font-semibold uppercase text-gray-100">
                       {service.title}
                     </span>
                   </div>
-                  <div>
-                    <button className="border px-3 py-2.5 text-lg font-bold outline-none transition-all duration-300 hover:ring hover:ring-purple-300 focus:ring focus:ring-purple-300">
-                      KNOW MORE
-                    </button>
-                  </div>
+                  <button className="border px-3 py-2.5 text-lg font-bold outline-none transition-all duration-300 hover:ring hover:ring-purple-300 focus:ring focus:ring-purple-300">
+                    KNOW MORE
+                  </button>
                 </Link>
               ))}
             </div>
@@ -205,15 +203,12 @@ const Blogpage: NextPage = () => {
       <div>
         <FAQs faqs={faqs} />
       </div>
-
-      <div>
-        <div className="flex flex-col px-4 py-24 sm:px-8 xl:px-24 2xl:px-32">
-          <ContactUsFormSection />
-        </div>
+      <div className="flex flex-col px-4 py-24 sm:px-8 xl:px-24 2xl:px-32">
+        <ContactUsFormSection />
       </div>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Blogpage
+export default Blogpage;
