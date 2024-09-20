@@ -10,7 +10,7 @@ import { Header } from '~/components/Header'
 import { Landing } from '~/components/Landing'
 import { getMetaData } from '~/utils/meta'
 // import { services } from '~/utils/services'
-import { api } from '~/utils/trpc'
+import { useEffect, useState } from 'react';
 
 const faqs = [
   {
@@ -60,7 +60,45 @@ const faqs = [
 ]
 
 const ServicesPage: NextPage = () => {
-  const { data: services } = api.service.getAll.useQuery()
+  //const { data: services } = api.service.getAll.useQuery()
+  const [services, setServices] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://eventsugi.com/api/trpc/service.getAll');
+
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const result = await response.json();
+        console.log('Fetched result:', result);
+
+        // Extract the array from the result object
+        const data = result.result?.data?.json || [];
+        if (Array.isArray(data)) {
+          setServices(data);
+        } else {
+          console.error('Expected an array but got:', data);
+        }
+      } catch (error) {
+        console.error('Error fetching Services :', error);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Failed to load Services page.</p>;
 
   if (!services) return null
 
