@@ -4,8 +4,17 @@ import { FC, useEffect, useState } from 'react'
 import { CgClose } from 'react-icons/cg'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { NavLinks } from '~/utils/navLinks'
-import { api } from '~/utils/trpc'
 import { CatalogDialog } from './ContactUsForm'
+interface ServiceHeader {
+  id: string;
+  serviceId: string;
+  order: number;
+  service: {
+    id: string;
+    name: string;
+    slug: string;
+  };
+}
 
 // const servicesHeader = [
 //   {
@@ -68,9 +77,29 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [servicesMenuOpen, setServicesMenuOpen] = useState(false)
   const [dark, setDark] = useState(false)
+  const [serviceHeaders, setServiceHeaders] = useState<ServiceHeader[]>([]);
 
-  const { data: serviceHeaders } = api.service.getHeaders.useQuery()
+  // Fetch data from a URL
+    // Fetch data from the specified URL
+  useEffect(() => {
+    const fetchServiceHeaders = async () => {
+      try {
+        const response = await fetch('https://eventsugi.com/api/trpc/service.getHeaders');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        // Access the correct part of the response structure
+        setServiceHeaders(result?.result?.data?.json || []);
+      } catch (error) {
+        console.error('Error fetching service headers:', error);
+      }
+    };
 
+    fetchServiceHeaders();
+  }, []);
+
+  //const { data: serviceHeaders } = api.service.getHeaders.useQuery()
   const isDark = forceDark ? false : dark
 
   useEffect(() => {
@@ -140,6 +169,7 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                   className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
                 >
                   About Us
+           
                 </Link>
               </li>
               <li className="group relative hidden md:block">
@@ -148,7 +178,7 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                   className="tooltip transition-all duration-300 group-hover:text-[#ba96fd]"
                 >
                   Services
-                
+            
                 </Link>
                 <div
                   className={`invisible absolute -right-36 grid w-[576px] grid-cols-2 gap-3 rounded-sm p-4 text-base opacity-0 shadow-sm transition-all duration-300 group-hover:visible group-hover:opacity-95 ${
@@ -172,39 +202,40 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                       </span>
                     </Link>
                   ))} */}
-                {[...new Map(serviceHeaders?.map(s => [s.service.slug, s])).values()].map(s => (
-                <Link
-                  key={s.service.slug}
-                  href={`/${s.service.slug.replace('/blog/', '')}`}
+                 
+                  {[...new Map(serviceHeaders.map(s => [s?.service?.slug, s])).values()].map(s => (
+                  <Link
+                  key={s?.service?.slug}
+                  href={`/${s?.service?.slug?.replace('/blog/', '')}`}
                   className={`tooltip p-2 font-medium underline-offset-4 transition-all hover:underline ${
-                    !isDark
-                      ? 'bg-gray-900 hover:bg-gray-800'
-                      : 'bg-gray-100 hover:bg-gray-200'
+                  !isDark ? 'bg-gray-900 hover:bg-gray-800' : 'bg-gray-100 hover:bg-gray-200'
                   }`}
-                >
+                  >
                   <span className="mr-2 inline-block h-2 w-2 rounded-full bg-[#ba96fd]" />
-                  {s.service.name}
-                </Link>
-              ))}
+                  {s?.service?.name}
+             
+                  </Link>
+                  ))}
                 </div>
               </li>
-          
+            <li className="relative">
+                <Link
+                  href="/blog"
+                  className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
+                >
+                  Blog
+              
+                </Link>
+              </li> 
               <li className="relative">
                 <Link
                   href="/portfolio"
                   className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
                 >
                   Work
+                
                 </Link>
               </li>
-              <li className="relative">
-                <Link
-                  href="/blog"
-                  className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
-                >
-                  Blog
-                </Link>
-              </li> 
               <li className="relative">
                 <Link
                   href="/#clients-section"
@@ -220,7 +251,7 @@ export const Header: FC<{ forceDark?: boolean }> = ({ forceDark }) => {
                   className="tooltip transition-all duration-300 hover:text-[#ba96fd]"
                 >
                   Get Quote
-               
+          
                 </Link>
               </li>
               <li className="relative">
