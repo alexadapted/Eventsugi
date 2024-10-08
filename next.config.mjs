@@ -23,7 +23,8 @@ const config = {
       {
         hostname: 'storage.googleapis.com'
       }
-    ]
+    ],
+    minimumCacheTTL: 60, // Cache for 60 seconds (adjust as needed)
   },
   // Add Cache-Control headers
   async headers() {
