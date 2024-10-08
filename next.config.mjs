@@ -24,7 +24,21 @@ const config = {
         hostname: 'storage.googleapis.com'
       }
     ]
-  }
+  },
+  // Add Cache-Control headers
+  async headers() {
+    return [
+      {
+        source: '/(.*)', // Apply to all routes
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'max-age=0, s-maxage=86400', // Adjust the cache duration as needed
+          },
+        ],
+      },
+    ]
+  },
 }
 
 export default config
