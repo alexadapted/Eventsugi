@@ -34,7 +34,7 @@ const config = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'max-age=0, s-maxage=86400', // Adjust the cache duration as needed
+            value: 'max-age=0, s-maxage=86400 stale-while-revalidate=59', // Adjust the cache duration as needed
           },
         ],
       },
