@@ -46,7 +46,10 @@ export const contactUsLeadRouter = createTRPCRouter({
       // Email to the user
     const userMsg = {
       to: input.email, // recipient email
-      from: 'hello@eventsugi.com', // sender email (must be verified in SendGrid)
+      from: {
+        email: 'hello@eventsugi.com', // sender email (must be verified in SendGrid)
+        name: 'Eventsugi LLC', // sender name
+      },
       subject: 'Thank you for contacting us',
       text: `Hello ${input.name},\n\nThank you for your message. Here are the details you provided:\n\n` +
             `Name: ${input.name}\n` +
@@ -73,7 +76,10 @@ export const contactUsLeadRouter = createTRPCRouter({
     // Email to the admin
     const adminMsg = {
       to: 'hello@eventsugi.com', // admin email (change to the actual admin email)
-      from: 'hello@eventsugi.com', // sender email (must be verified in SendGrid)
+      from: {
+        email: 'hello@eventsugi.com', // sender email (must be verified in SendGrid)
+        name: 'Eventsugi LLC', // sender name
+      },
       subject: 'New Inquiry Submitted',
       text: `A new inquiry has been submitted. Here are the details:\n\n` +
             `Name: ${input.name}\n` +
