@@ -173,39 +173,45 @@ const Blogpage: NextPage = () => {
 
             <div className="mt-16 flex flex-col items-center justify-center gap-8 md:grid md:grid-cols-2 xl:grid-cols-3">
             {services.map((service, index) => {
-              const defaultImageSrc = '/Images/event-management-company/Images _ 12 Blogs/Eventsugi.png';
-              const imagePath = service.slug === 'Corporate-Events-EventSugi' || service.slug === 'Eventsugi'
-              ? `/Images/event-management-company/Images _ 12 Blogs/${service.slug}.png`
-              : defaultImageSrc;
+  const defaultImageSrc = '/Images/event-management-company/Images _ 12 Blogs/Eventsugi.png';
+  const imagePath = service.slug === 'Corporate-Events-EventSugi' || service.slug === 'Eventsugi'
+  ? `/Images/event-management-company/Images _ 12 Blogs/${service.slug}.png`
+  : defaultImageSrc;
+  
 
+  return (
+    <Link
+      key={index}
+      href={`/blog/${service.slug}`}
+      className="flex flex-col items-center justify-center gap-4"
+    >
+      <div className="relative">
+        <Image
+          src={imagePath}
+          alt={service.slug}
+          className="object-cover brightness-50 transition-all duration-300 hover:brightness-60"
+          layout="responsive"
+          width={1}
+          height={1}
+        />
+      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-heading px-3.5 sm:text-lg md:text-xl lg:text-xl font-semibold uppercase text-gray-100">
+        {service.title}
 
-              return (
-              <Link
-              key={index}
-              href={`/blog/${service.slug}`}
-              className="flex flex-col items-center justify-center gap-4"
-              >
-              <div className="relative">
-              <Image
-              src={imagePath}
-              alt={service.slug}
-              className="object-cover brightness-75 transition-all duration-300 hover:brightness-50"
-              layout="responsive"
-              width={1}
-              height={1}
-              />
-              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-heading px-3.5 sm:text-lg md:text-xl lg:text-xl font-semibold uppercase text-gray-100">
-              {service.title}
-              </span>
-              </div>
-
-              <button className="border px-3 py-2.5 text-lg font-bold outline-none transition-all duration-300 hover:ring hover:ring-purple-300 focus:ring focus:ring-purple-300">
+        <button className="border px-3 py-2.5 text-lg font-bold outline-none transition-all duration-300 hover:ring hover:ring-purple-300 focus:ring focus:ring-purple-300">
                     KNOW MORE
                   </button>
-              </Link>
-              );
-            })}
+      </span>
 
+      </div>
+
+     
+    </Link>
+  );
+})}
+
+
+
+        
             </div>
           </div>
         </div>

@@ -16,7 +16,7 @@ import { LineShape } from '~/components/LineShape'
 import { prisma } from '~/server/db'
 import { getMetaData } from '~/utils/meta'
 import { structuredData } from '~/utils/structuredData'
-import { api } from '~/utils/trpc'
+import { useEffect, useState } from 'react';
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const data = await prisma.homePageConfig.findFirst({
@@ -35,10 +35,78 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 }
 
+
 const Home = ({ imageUrl }: { imageUrl: string }) => {
-  const { data: clients } = api.client.getAll.useQuery()
-  const { data: services } = api.service.getAllHome.useQuery()
-  const { data: portfolios } = api.portfolio.getAll.useQuery()
+   // Set type for clients
+  //const [clients, setClients] = useState([]);
+  const [clients, setClients] = useState<any[]>([]);
+  const [services, setServices] = useState<any[]>([]);
+  const [portfolios, setPortfolios] = useState<any[]>([]);
+
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // Fetch all three APIs in parallel
+      const baseURL = window.location.origin; // This will dynamically get the base URL
+
+      // Fetch all three APIs in parallel
+      const [response, service, portfolio] = await Promise.all([
+        fetch(`${baseURL}/api/trpc/client.getAll`),
+        fetch(`${baseURL}/api/trpc/service.getAllHome`),
+        fetch(`${baseURL}/api/trpc/portfolio.getAll`)
+      ]);
+
+
+      // Log response statuses
+      console.log('Service response status:', service.status);
+      console.log('Portfolio response status:', portfolio.status);
+
+      // Check if the client response was not okay
+      if (!response.ok) {
+        throw new Error('Client data fetch failed');
+      }
+
+      // Parse the JSON for all responses
+      const clientData = await response.json();
+      const serviceData = await service.json();
+      const portfolioData = await portfolio.json();
+
+      // Extract arrays from the response objects
+      const clients = clientData?.result?.data?.json || [];
+      const services = serviceData?.result?.data?.json || [];
+      const portfolios = portfolioData?.result?.data?.json || [];
+
+      // Set state for each array if it's valid
+      if (Array.isArray(clients)) {
+        setClients(clients);
+      } else {
+        console.error('Expected an array for clients but got:', clients);
+      }
+
+      if (Array.isArray(services)) {
+        setServices(services);
+      } else {
+        console.error('Expected an array for services but got:', services);
+      }
+
+      if (Array.isArray(portfolios)) {
+        setPortfolios(portfolios);
+      } else {
+        console.error('Expected an array for portfolios but got:', portfolios);
+      }
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  fetchData();
+}, []);
+
+ 
+  //const { data: clients } = fetchClients();
+  // const { data: services } = api.service.getAllHome.useQuery()
+  // const { data: portfolios } = api.portfolio.getAll.useQuery()
 
   return (
     <>
@@ -275,7 +343,8 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
         </div>
 
         <div id="clients-section">
-          <div className="flex min-h-screen flex-col px-4 pt-24 sm:px-8 xl:px-24 2xl:px-32">
+          
+          <div className="bg-gray-300 text-white flex h-[75vh] flex-col px-4 pt-24 sm:px-8 xl:px-24 2xl:px-32">
             <h2 className="font-heading text-3xl font-bold uppercase tracking-wide lg:text-4xl xl:text-5xl">
               We Love Our Clients
             </h2>
@@ -289,7 +358,7 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
               journey through event planning, making it a seamless and enjoyable
               experience.
             </p>
-            <div className="flex h-full flex-col justify-center">
+            <div className="mt-12 mb-12 flex h-full flex-col justify-center">
               <Slider
                 infinite
                 autoplay
@@ -397,12 +466,12 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
         </div>
 
         <div
-          className=" min-h-screen !justify-start bg-gray-500 bg-cover bg-center bg-no-repeat text-white bg-blend-multiply"
+          className="  h-[55vh] !justify-start bg-gray-500 bg-cover bg-center bg-no-repeat text-white bg-blend-multiply"
           style={{
             backgroundImage: `url('/Images/event-management-company/Images _ 1 Home Page/Testimonials.png')`
           }}
         >
-          <div className="flex h-[100vh] flex-col px-4 pb-8 pt-24 sm:px-8 xl:px-24 2xl:px-32">
+          <div className="flex h-[50vh] flex-col px-4 pb-8 pt-24 sm:px-8 xl:px-24 2xl:px-32">
             <Link href="testimonials">
               <h2 className="font-heading text-3xl font-bold uppercase tracking-wide lg:text-4xl xl:text-5xl">
                 Testimonials

@@ -25,7 +25,7 @@ export const Landing: FC<{
         />
         <div className="absolute flex h-full w-full flex-col items-center justify-center gap-8 bg-black bg-opacity-30 text-center tracking-wider">
           <h1
-            className={`font-heading text-2xl font-bold uppercase text-gray-50 sm:text-3xl md:text-5xl`}
+            className={`font-heading text-2xl font-bold uppercase text-gray-50 sm:text-3xl md:text-7xl`}
           >
             {title}
           </h1>
