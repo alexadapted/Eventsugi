@@ -299,7 +299,7 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
                 <Link
                   key={i}
                   className="group relative flex w-1/3 overflow-hidden lg:w-1/5"
-                  href={`/services/${service.slug}`}
+                  href={`/${service.slug}`}
                 >
                   <Image
                     src={service.image.url}
@@ -358,12 +358,12 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
               journey through event planning, making it a seamless and enjoyable
               experience.
             </p>
-            <div className="mt-12 mb-12 flex h-full flex-col justify-center">
+            <div className="mt-12 mb-0 flex h-full flex-col justify-center">
               <Slider
                 infinite
                 autoplay
-                slidesToShow={3}
-                className="black-arrow-slides mx-8 mb-24"
+                slidesToShow={6}
+                className="black-arrow-slides mx-8 mb-12"
                 slidesToScroll={1}
                 responsive={[
                   {
@@ -391,7 +391,7 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
                       src={client.image?.url || ''}
                       alt={client.name}
                       fill
-                      className="object-contain px-4"
+                      className="object-contain  h-[250px] px-4"
                     />
                   </div>
                 ))}
