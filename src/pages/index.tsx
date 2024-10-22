@@ -344,7 +344,7 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
 
         <div id="clients-section">
           
-          <div className="bg-gray-300 text-white flex h-[75vh] flex-col px-4 pt-24 sm:px-8 xl:px-24 2xl:px-32">
+          <div className="bg-gray-300 text-white flex h-[80vh] flex-col px-4 pt-24 sm:px-8 xl:px-24 2xl:px-32">
             <h2 className="font-heading text-3xl font-bold uppercase tracking-wide lg:text-4xl xl:text-5xl">
               We Love Our Clients
             </h2>
@@ -358,7 +358,7 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
               journey through event planning, making it a seamless and enjoyable
               experience.
             </p>
-            <div className="mt-12 mb-0 flex h-full flex-col justify-center">
+            <div className="mt-6 mb-0 flex h-full flex-col justify-center">
               <Slider
                 infinite
                 autoplay
@@ -385,13 +385,13 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
                 {clients?.map((client, index) => (
                   <div
                     key={index}
-                    className="relative max-h-[600px] min-h-[300px]  lg:h-[300px]"
+                    className="relative max-h-[600px] min-h-[250px]  lg:h-[300px]"
                   >
                     <Image
                       src={client.image?.url || ''}
                       alt={client.name}
                       fill
-                      className="object-contain  h-[250px] px-4"
+                      className="object-contain px-4"
                     />
                   </div>
                 ))}
@@ -401,7 +401,7 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
         </div>
 
         <div className=" bg-black text-white">
-          <div className="flex min-h-screen flex-col px-4 pt-24 sm:px-8 xl:px-24 2xl:px-32">
+          <div className="flex pb-20 flex-col px-4 pt-24 sm:px-8 xl:px-24 2xl:px-32">
             <Link href="/portfolio">
               <h2 className="font-heading text-3xl font-bold uppercase tracking-wide lg:text-4xl xl:text-5xl">
                 Portfolio
@@ -412,7 +412,7 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
               <Slider
                 autoplay
                 infinite
-                slidesToShow={2}
+                slidesToShow={3}
                 className="mx-8"
                 slidesToScroll={1}
                 centerMode
@@ -466,12 +466,12 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
         </div>
 
         <div
-          className="  h-[55vh] !justify-start bg-gray-500 bg-cover bg-center bg-no-repeat text-white bg-blend-multiply"
+          className="h-55 md:h-[50vh] !justify-start bg-gray-500 bg-cover bg-center bg-no-repeat text-white bg-blend-multiply"
           style={{
             backgroundImage: `url('/Images/event-management-company/Images _ 1 Home Page/Testimonials.png')`
           }}
         >
-          <div className="flex h-[50vh] flex-col px-4 pb-8 pt-24 sm:px-8 xl:px-24 2xl:px-32">
+          <div className="flex h-55 md:h-[55vh] flex-col px-4 pb-24 pt-24 sm:px-8 xl:px-24 2xl:px-32">
             <Link href="testimonials">
               <h2 className="font-heading text-3xl font-bold uppercase tracking-wide lg:text-4xl xl:text-5xl">
                 Testimonials
@@ -482,21 +482,21 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
               <Slider
                 autoplay
                 infinite
-                slidesToShow={2}
-                className="mx-8"
+                slidesToShow={1}
+                className="mx-8 "
                 slidesToScroll={1}
                 responsive={[
                   {
                     breakpoint: 1280,
                     settings: {
-                      slidesToShow: 2,
+                      slidesToShow: 1,
                       slidesToScroll: 1
                     }
                   },
                   {
                     breakpoint: 1024,
                     settings: {
-                      slidesToShow: 2,
+                      slidesToShow: 1,
                       slidesToScroll: 1
                     }
                   },
@@ -531,8 +531,8 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
                     className="flex flex-col gap-8 px-8 sm:w-1/2 md:w-1/3 md:px-12"
                   >
                     <BiSolidQuoteAltLeft size={32} />
-                    <p>{testimonial.quote}</p>
-                    <p>- {testimonial.author}</p>
+                    <p className='lg:text-2xl'>{testimonial.quote}</p>
+                    <p className='lg:text-1.5xl' >- {testimonial.author}</p>
                   </div>
                 ))}
               </Slider>
