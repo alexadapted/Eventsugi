@@ -189,7 +189,7 @@ const Blogpage: NextPage = () => {
         <Image
           src={imagePath}
           alt={service.slug}
-          className="object-cover brightness-50 transition-all duration-300 hover:brightness-60"
+          className="object-cover brightness-30 transition-all duration-300 hover:brightness-60"
           layout="responsive"
           width={1}
           height={1}
