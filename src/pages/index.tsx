@@ -228,7 +228,7 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
         </div>
 
         <div className=" bg-black text-white">
-          <div className="flex min-h-screen flex-col px-4 pt-24 sm:px-8 xl:px-24 2xl:px-32">
+          <div className="flex  flex-col px-4 pb-12 pt-24 sm:px-8 xl:px-24 2xl:px-32">
             <h2 className="font-heading text-3xl font-bold uppercase tracking-wide lg:text-4xl">
               Eventsugi Services - One of the Leading Event Management Agencies
               In Dubai
