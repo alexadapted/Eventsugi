@@ -466,7 +466,7 @@ const Home = ({ imageUrl }: { imageUrl: string }) => {
         </div>
 
         <div
-          className="h-55 md:h-[50vh] !justify-start bg-gray-500 bg-cover bg-center bg-no-repeat text-white bg-blend-multiply"
+          className="h-55 md:h-[55vh] !justify-start bg-gray-500 bg-cover bg-center bg-no-repeat text-white bg-blend-multiply"
           style={{
             backgroundImage: `url('/Images/event-management-company/Images _ 1 Home Page/Testimonials.png')`
           }}
