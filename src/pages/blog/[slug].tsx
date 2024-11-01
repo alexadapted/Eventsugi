@@ -38,7 +38,7 @@ const BlogPage: NextPage = () => {
     return <p>Blog not found</p>;
   }
   // Determine the image source based on blog.slug
-  const imageSrc = blog.slug === 'Corporate-Events-EventSugi' || blog.slug === 'Eventsugi'
+  const imageSrc = blog.slug === 'Corporate-Events-EventSugi' || blog.slug ===  'UAE-National-Day-Event' || blog.slug === 'Eventsugi'
     ? `/Images/event-management-company/Images _ 12 Blogs/${blog.slug}.png`
     : defaultImageSrc;
 
