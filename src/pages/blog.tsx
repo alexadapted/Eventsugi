@@ -63,7 +63,6 @@ const Blogpage: NextPage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch('https://eventsugi.com/api/trpc/blogs.getAll');
-
         console.log('Response status:', response.status);
         console.log('Response headers:', response.headers);
 
