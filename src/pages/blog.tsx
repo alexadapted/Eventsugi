@@ -173,7 +173,7 @@ const Blogpage: NextPage = () => {
             <div className="mt-16 flex flex-col items-center justify-center gap-8 md:grid md:grid-cols-2 xl:grid-cols-3">
             {services.map((service, index) => {
   const defaultImageSrc = '/Images/event-management-company/Images _ 12 Blogs/Eventsugi.png';
-  const imagePath = service.slug === 'Corporate-Events-EventSugi' || service.slug === 'wedding-decorations-dubai-eventsugi' || service.slug === 'new-years-party-planning-dubai' || service.slug === 'christmas-decorations-corporate-events-uae' || service.slug === 'proposal-planning-dubai' || service.slug ===  'UAE-National-Day-Event' || service.slug === 'Eventsugi'
+  const imagePath = service.slug === 'Corporate-Events-EventSugi' || service.slug === 'ramadan-event-planners-dubai' || service.slug === 'wedding-decorations-dubai-eventsugi' || service.slug === 'new-years-party-planning-dubai' || service.slug === 'christmas-decorations-corporate-events-uae' || service.slug === 'proposal-planning-dubai' || service.slug ===  'UAE-National-Day-Event' || service.slug === 'Eventsugi'
   ? `/Images/event-management-company/Images _ 12 Blogs/${service.slug}.png`
   : defaultImageSrc;
   

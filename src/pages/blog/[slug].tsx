@@ -72,7 +72,7 @@ const BlogPage: NextPage = () => {
   }
 
   // Determine the image source based on blog.slug
-  const imageSrc = blog.slug === 'Corporate-Events-EventSugi' || blog.slug === 'wedding-decorations-dubai-eventsugi' || blog.slug === 'new-years-party-planning-dubai' || blog.slug === 'christmas-decorations-corporate-events-uae' || blog.slug === 'proposal-planning-dubai' || blog.slug === 'UAE-National-Day-Event' || blog.slug === 'Eventsugi'
+  const imageSrc = blog.slug === 'Corporate-Events-EventSugi' || blog.slug === 'ramadan-event-planners-dubai' || blog.slug === 'wedding-decorations-dubai-eventsugi' || blog.slug === 'new-years-party-planning-dubai' || blog.slug === 'christmas-decorations-corporate-events-uae' || blog.slug === 'proposal-planning-dubai' || blog.slug === 'UAE-National-Day-Event' || blog.slug === 'Eventsugi'
     ? `/Images/event-management-company/Images _ 12 Blogs/${blog.slug}.png`
     : defaultImageSrc;
 
