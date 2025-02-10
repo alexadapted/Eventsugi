@@ -18,8 +18,7 @@ export const blogsRouter = createTRPCRouter({
         return await prisma.blog.findMany({
           where: { published: true },
           orderBy: { createdAt: 'desc' },
-          take: 20, // Ensure you fetch all or specify a desired number
-          
+          take: 15, // Ensure you fetch all or specify a desired number
         });
       } catch (error) {
         throw new Error('Failed to fetch blogs');
