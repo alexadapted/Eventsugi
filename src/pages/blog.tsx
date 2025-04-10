@@ -200,7 +200,6 @@ const Blogpage: NextPage = () => {
         </button>
       </span>
     
-
       </div>
 
      
