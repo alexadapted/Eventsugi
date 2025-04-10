@@ -193,13 +193,13 @@ const Blogpage: NextPage = () => {
           width={1}
           height={1}
         />
-       <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-heading px-3.5 sm:text-lg md:text-xl lg:text-1.5xl font-semibold uppercase text-gray-100">
+      <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-heading px-3.5 sm:text-lg md:text-xl lg:text-1.5xl font-semibold uppercase text-gray-100 flex flex-col items-center gap-2">
         {service.title}
-
         <button className="border px-3 py-2.5 text-lg font-bold outline-none transition-all duration-300 hover:ring hover:ring-purple-300 focus:ring focus:ring-purple-300">
-                    READ MORE
-                  </button>
+        READ MORE
+        </button>
       </span>
+    
 
       </div>
 
